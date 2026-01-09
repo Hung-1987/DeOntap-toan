@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Đề ôn tập Phép tính lũy thừa và logarit - Toán 11</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --accent:#2563eb;
+      --accent-soft:#eff6ff;
+      --border:#e5e7eb;
+      --text:#111827;
+      --success:#16a34a;
+      --error:#dc2626;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      padding:16px;
+      background:var(--bg);
+      font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+      color:var(--text);
+    }
+
+    .wrapper{
+      max-width:980px;
+      margin:0 auto;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(15,23,42,0.08);
+      padding:24px 20px 28px;
+    }
+
+    .exam-header{
+      text-align:center;
+      margin-bottom:16px;
+    }
+
+    .teacher{
+      font-size:0.95rem;
+      color:#4b5563;
+      margin-bottom:4px;
+    }
+
+    .exam-title{
+      font-size:1.3rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.04em;
+      color:var(--accent);
+      margin-bottom:6px;
+    }
+
+    .subtitle{
+      font-size:0.95rem;
+      color:#6b7280;
+    }
+
+    .student-info{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:10px 16px;
+      margin:18px 0 10px;
+      padding:12px 14px;
+      border-radius:10px;
+      background:var(--accent-soft);
+      border:1px solid #dbeafe;
+    }
+
+    .student-info .field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:0.9rem;
+    }
+
+    .student-info label{
+      font-weight:600;
+      color:#374151;
+    }
+
+    .student-info input{
+      border-radius:6px;
+      border:1px solid var(--border);
+      padding:6px 8px;
+      font-size:0.9rem;
+    }
+
+    h2.section-title{
+      font-size:1.05rem;
+      margin:18px 0 8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#111827;
+    }
+
+    h2.section-title span.badge{
+      font-size:0.8rem;
+      padding:2px 8px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    .q{
+      margin:10px 0;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#f9fafb;
+    }
+
+    .q.correct{
+      border-color:var(--success);
+      background:#ecfdf3;
+    }
+
+    .q.incorrect{
+      border-color:var(--error);
+      background:#fef2f2;
+    }
+
+    .q-title{
+      font-weight:600;
+      margin-bottom:6px;
+    }
+
+    .opts label{
+      display:block;
+      margin:2px 0;
+      cursor:pointer;
+      font-size:0.95rem;
+    }
+
+    .math-toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin:6px 0 4px;
+      font-size:0.85rem;
+      color:#4b5563;
+    }
+
+    .math-toolbar span{
+      margin-right:6px;
+      font-weight:600;
+    }
+
+    .math-btn{
+      border-radius:999px;
+      border:1px solid #cbd5f5;
+      background:#eef2ff;
+      padding:3px 8px;
+      font-size:0.8rem;
+      cursor:pointer;
+    }
+
+    .math-btn:hover{
+      background:#e0e7ff;
+    }
+
+    textarea.short-input{
+      width:100%;
+      min-height:50px;
+      padding:6px 8px;
+      border-radius:6px;
+      border:1px solid var(--border);
+      resize:vertical;
+      font-size:0.9rem;
+      font-family:inherit;
+    }
+
+    .preview{
+      margin-top:4px;
+      font-size:0.85rem;
+      color:#4b5563;
+    }
+
+    .preview-math{
+      display:inline-block;
+      padding-left:4px;
+    }
+
+    .actions{
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .btn-submit{
+      border:none;
+      border-radius:999px;
+      padding:8px 18px;
+      font-size:0.95rem;
+      font-weight:600;
+      cursor:pointer;
+      background:var(--accent);
+      color:white;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .btn-submit:hover{
+      filter:brightness(0.95);
+    }
+
+    .result-box{
+      padding:8px 12px;
+      border-radius:8px;
+      background:#ecfdf3;
+      border:1px solid #bbf7d0;
+      color:#166534;
+      font-size:0.9rem;
+      display:none;
+    }
+
+    .answer-key{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:8px;
+      background:#f9fafb;
+      border:1px dashed var(--border);
+      font-size:0.9rem;
+      display:none;
+    }
+
+    .answer-key h3{
+      margin-top:0;
+      font-size:0.95rem;
+    }
+
+    .answer-key-list{
+      columns:2;
+      column-gap:16px;
+      padding-left:18px;
+    }
+
+    @media(max-width:640px){
+      .answer-key-list{ columns:1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="exam-header">
+        <div class="teacher">Người ra đề: <strong>Thạc sĩ Lư Tư Hùng</strong></div>
+        <div class="exam-title">
+          ĐỀ ÔN TẬP Phép tính lũy thừa và logarit - TOÁN 11
+        </div>
+        <div class="subtitle">
+          Học sinh làm bài và bấm <strong>Nộp bài</strong> để xem kết quả.
+        </div>
+      </div>
+
+      <form id="quiz-form">
+        <div class="student-info">
+          <div class="field">
+            <label for="school">Trường</label>
+            <input id="school" name="school" placeholder="Nhập tên trường" />
+          </div>
+          <div class="field">
+            <label for="class">Lớp</label>
+            <input id="class" name="class" placeholder="VD: 10A1" />
+          </div>
+          <div class="field">
+            <label for="student-name">Họ và tên</label>
+            <input id="student-name" name="student-name" placeholder="Nguyễn Văn A" />
+          </div>
+          <div class="field">
+            <label for="student-id">Mã số</label>
+            <input id="student-id" name="student-id" placeholder="Mã số học sinh" />
+          </div>
+        </div>
+
+        <h2 class="section-title">
+          Phần I. Trắc nghiệm
+          <span class="badge">Chọn 1 đáp án đúng</span>
+        </h2>
+        <div id="mcq-wrapper">
+          <div class="q" data-type="mcq" data-answer="B"><div class="q-title">Câu 1. Rút gọn biểu thức 2^3 \times 2^5.</div><div class="opts"><label><input type="radio" name="q1"> A. 2^8 + 2^3</label><label><input type="radio" name="q1"> B. 2^8</label><label><input type="radio" name="q1"> C. 2^{15}</label><label><input type="radio" name="q1"> D. 2^{2}</label></div></div><div class="q" data-type="mcq" data-answer="D"><div class="q-title">Câu 2. Giải phương trình 3^{2x} = 27.</div><div class="opts"><label><input type="radio" name="q2"> A. x = 3</label><label><input type="radio" name="q2"> B. x = \frac{1}{3}</label><label><input type="radio" name="q2"> C. x = 9</label><label><input type="radio" name="q2"> D. x = \frac{3}{2}</label></div></div><div class="q" data-type="mcq" data-answer="A"><div class="q-title">Câu 3. Tính giá trị của biểu thức \log_{2}(8) + \log_{2}(4).</div><div class="opts"><label><input type="radio" name="q3"> A. 5</label><label><input type="radio" name="q3"> B. 2</label><label><input type="radio" name="q3"> C. 6</label><label><input type="radio" name="q3"> D. 8</label></div></div>
+        </div>
+
+        <h2 class="section-title">
+          Phần II. Đúng / Sai
+          <span class="badge">Đánh dấu câu trả lời</span>
+        </h2>
+        <div id="tf-wrapper">
+          <div class="q" data-type="tf" data-answer="Sai"><div class="q-title">Câu 4. Biểu thức \log_{3}(9) = 3.</div><div class="tf"><label><input type="radio" name="q4"> Đúng</label><label><input type="radio" name="q4"> Sai</label></div></div>
+        </div>
+
+        <h2 class="section-title">
+          Phần III. Trả lời ngắn
+          <span class="badge">Gõ công thức</span>
+        </h2>
+        <div id="short-wrapper">
+          <div class="q" data-type="short" data-answer-latex="9"><div class="q-title">Câu 5. Tính giá trị của biểu thức 3^{2} \times 3^{1}.</div><textarea id="q5" rows="2"></textarea></div><div class="q" data-type="short" data-answer-latex="4"><div class="q-title">Câu 6. Tính \log_{2}(16).</div><textarea id="q6" rows="2"></textarea></div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn-submit" id="submitBtn">
+            Nộp bài
+          </button>
+          <div id="result-box" class="result-box"></div>
+        </div>
+
+        <div id="answer-key" class="answer-key">
+          <h3>Đáp án</h3>
+          <ol id="answer-list" class="answer-key-list"></ol>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+   // ⚠️ WEBHOOK URL - Lấy từ N8N
+  const WEBHOOK_URL = 'https://mrhungn8n.tino.page/webhook/submit-quiz';
+  // Hàm chuẩn hóa LaTeX
+  function normalizeLatex(str){
+    if(!str) return "";
+    let s = str.trim();
+    s = s.replace(/^\\\(|\\\[$/, "").replace(/\\\)|\\\]$/, "");
+    s = s.replace(/\s+/g,"");
+    return s;
+  }
+</script>
+
+<script>
+// AUTOWRAP CHUẨN KHÔNG GÂY LỖI TỈ SỐ HÌNH HỌC
+document.addEventListener("DOMContentLoaded", () => {
+
+  const wrappers = ["mcq-wrapper", "tf-wrapper", "short-wrapper"];
+
+  wrappers.forEach(id => {
+    const box = document.getElementById(id);
+    if (!box) return;
+
+    // Bảo vệ các đoạn đã có \(...\) hoặc \[...\]
+    const protected = [];
+    box.innerHTML = box.innerHTML.replace(/\\\(.*?\\\)|\\\[.*?\\\]/g, (match) => {
+      protected.push(match);
+      return `___PROTECTED_${protected.length - 1}___`;
+    });
+
+    // Regex chính xác hơn: chỉ bắt các đoạn có ký tự LaTeX thật
+    box.innerHTML = box.innerHTML.replace(/([A-Za-z0-9\\^_{}=+\-*/()[\].]+)/g, (txt) => {
+
+      // 1) Nếu là placeholder bảo vệ → giữ nguyên
+      if (txt.startsWith("___PROTECTED_")) return txt;
+
+      // 2) CHỈ CHỮ (AB, AC, DE, PQ, TR...) → KHÔNG wrap
+      if (/^[A-Za-z]{1,4}$/.test(txt)) return txt;
+
+      // 3) TỈ SỐ HÌNH HỌC (AD/DB, AE/BC, DB/EC...) → KHÔNG wrap
+      if (/^[A-Za-z]{1,3}\/[A-Za-z]{1,3}$/.test(txt)) return txt;
+
+      // 4) CHỈ SỐ THUẦN (6, 7, 8, 3, 4...) → KHÔNG wrap
+      if (/^[0-9]+$/.test(txt)) return txt;
+
+      // 5) LỆNH LATEX ĐẶC BIỆT (không có số/biến kèm) → wrap
+      if (/^\\(times|cdot|neq|leq|geq|pm|mp|div|approx|equiv)$/.test(txt)) {
+        return `\\(${txt}\\)`;
+      }
+
+      // 6) CÔNG THỨC THẬT → wrap
+      if (/\\frac|\\sqrt|\\log|\\vec|\\int|\\infty|\\sin|\\cos|\\tan|\\lim/.test(txt) ||
+          /[0-9][\^\_]/.test(txt) || // Số có mũ/chỉ số: 2^3, x_1
+          /[A-Za-z][\^\_]\{/.test(txt)) { // Biến có mũ/chỉ số: a^{2}, x_{n}
+        return `\\(${txt}\\)`;
+      }
+
+      return txt;
+    });
+
+    // Khôi phục các đoạn đã bảo vệ
+    protected.forEach((val, idx) => {
+      box.innerHTML = box.innerHTML.replace(`___PROTECTED_${idx}___`, val);
+    });
+  });
+
+  if (window.MathJax) MathJax.typesetPromise();
+});
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ----- TOOLBAR TRẢ LỜI NGẮN -----
+    let activeInput = null;
+
+ document.querySelectorAll('.q[data-type="short"]').forEach((q) => {
+    const correct = q.getAttribute("data-answer-latex")?.trim() || "";
+
+    // --- Kiểm tra xem đáp án là SỐ hay CÔNG THỨC ---
+    const isNumeric = /^[0-9.\-]+$/.test(correct);
+
+    // Lấy lại phần tiêu đề câu hỏi
+    const title = q.querySelector('.q-title')?.innerHTML || "";
+
+    // Xóa toàn bộ để render lại
+    q.innerHTML = `<div class="q-title">${title}</div>`;
+
+    if (isNumeric) {
+        // -----------------------------
+        //  TRƯỜNG HỢP 1: NHẬP SỐ
+        // -----------------------------
+        const input = document.createElement("input");
+        input.type = "number";
+        input.step = "0.1";
+        input.placeholder = "Nhập kết quả cuối cùng";
+        input.className = "short-input";
+
+        const note = document.createElement("div");
+        note.style.fontSize = "0.85rem";
+        note.style.opacity = "0.6";
+        note.style.marginTop = "4px";
+        note.textContent = "Nếu kết quả là số thập phân, làm tròn đến hàng phần mười.";
+
+        q.appendChild(input);
+        q.appendChild(note);
+
+    } else {
+        // -----------------------------
+        //  TRƯỜNG HỢP 2: NHẬP CÔNG THỨC
+        // -----------------------------
+        const textarea = document.createElement("textarea");
+        textarea.rows = 2;
+        textarea.className = "short-input";
+        textarea.placeholder = "Nhập công thức LaTeX";
+
+        const toolbar = document.createElement("div");
+        toolbar.className = "math-toolbar";
+        toolbar.innerHTML = `
+          <span>Gõ nhanh:</span>
+          <button type="button" class="math-btn" data-insert="\\sqrt{}">√</button>
+          <button type="button" class="math-btn" data-insert="\\frac{}{}">a/b</button>
+          <button type="button" class="math-btn" data-insert="^{}">mũ</button>
+          <button type="button" class="math-btn" data-insert="\\vec{}">\\vec</button>
+          <button type="button" class="math-btn" data-insert="\\left|\\right|">|x|</button>
+          <button type="button" class="math-btn" data-insert="\\int_{}^{}">∫</button>
+          <button type="button" class="math-btn" data-insert="\\sqrt[]{ }">√[n]</button>
+          <button type="button" class="math-btn" data-insert="\\infty">∞</button>
+        `;
+
+        const preview = document.createElement("div");
+        preview.className = "preview";
+        preview.innerHTML = `Xem trước: <span class="preview-math"></span>`;
+
+        const previewSpan = preview.querySelector(".preview-math");
+
+        function updatePreview() {
+            const tex = textarea.value.trim();
+            previewSpan.innerHTML = tex ? `\\(${tex}\\)` : "";
+            if (window.MathJax) MathJax.typesetPromise([previewSpan]);
+        }
+
+        textarea.addEventListener("input", updatePreview);
+
+        // Nút chèn toán
+        toolbar.querySelectorAll('.math-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const ins = btn.getAttribute("data-insert");
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value =
+                    textarea.value.slice(0, start) +
+                    ins +
+                    textarea.value.slice(end);
+                textarea.focus();
+                textarea.selectionStart = textarea.selectionEnd = start + ins.length;
+                updatePreview();
+            });
+        });
+
+        q.appendChild(toolbar);
+        q.appendChild(textarea);
+        q.appendChild(preview);
+    }
+});
+
+    // ====== XỬ LÝ NỘP BÀI ======
+    const form = document.getElementById('quiz-form');
+    const resultBox = document.getElementById('result-box');
+    const answerKey = document.getElementById('answer-key');
+    const answerList = document.getElementById('answer-list');
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      
+      // Lấy tên học sinh
+      const studentName = document.getElementById("student-name").value.trim() || "Bạn";
+
+      const questions = Array.from(document.querySelectorAll('.q'));
+      let total = questions.length;
+      let correct = 0;
+      answerList.innerHTML = '';
+
+      questions.forEach((q, idx)=>{
+        const type = q.dataset.type;
+        const ans = q.getAttribute('data-answer');
+        const ansLatex = q.getAttribute('data-answer-latex');
+        let isCorrect = false;
+        let displayAnswer = '';
+
+        if(type === 'mcq'){
+          const checked = q.querySelector('input[type="radio"]:checked');
+          if(checked){
+            const match = checked.parentElement.textContent.trim().match(/^([A-D])/);
+            const chosen = match ? match[1] : '';
+            if(chosen === ans) isCorrect = true;
+          }
+          displayAnswer = 'Câu ' + (idx+1) + ': ' + (ans || '?');
+
+        } else if(type === 'tf'){
+          const checked = q.querySelector('input[type="radio"]:checked');
+          if(checked){
+            const labelText = checked.parentElement.textContent.trim();
+            if(ans && labelText.includes(ans)) isCorrect = true;
+          }
+          displayAnswer = 'Câu ' + (idx+1) + ': ' + (ans || '');
+
+        } else if(type === 'short'){
+             const correct = ansLatex || "";
+             const isNumeric = /^[0-9\.\,\-]+$/.test(correct.trim());
+             const input = q.querySelector('input, textarea');
+
+             let student = input.value.trim();
+
+             if (isNumeric) {
+            // Cho phép sai số nhỏ ±0.1 để tránh lỗi làm tròn
+            isCorrect = Math.abs(parseFloat(student) - parseFloat(correct)) <= 0.1;
+           } else {
+           // Công thức: dùng normalize như cũ
+           const studentNorm = normalizeLatex(student);
+           const keyNorm = normalizeLatex(correct);
+           isCorrect = studentNorm === keyNorm;
+        }
+
+         displayAnswer = 'Câu ' + (idx+1) + ': ' + (correct || '');
+        }
+
+
+        q.classList.remove('correct','incorrect');
+        q.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if(isCorrect) correct++;
+
+        const li = document.createElement('li');
+        li.textContent = displayAnswer;
+        answerList.appendChild(li);
+      });
+
+      // ====== TÍNH PHẦN TRĂM ======
+     const percent = Math.round((correct / total) * 100);
+
+let message = "";
+if(percent < 50) message = "Bạn cần cố gắng thêm!";
+else if(percent < 80) message = "Làm tốt, hãy cố gắng hơn nữa!";
+else message = "Xuất sắc quá!";
+
+// ====== HIỆN KẾT QUẢ ======
+resultBox.innerHTML = `
+  <strong>${studentName}</strong> làm đúng <strong>${correct}/${total}</strong> câu (${percent}%).<br>
+  ${message}<br>
+  <small>Đang gửi điểm...</small>
+`;
+resultBox.style.display = 'block';
+
+// ====== GỬI ĐIỂM VỀ N8N ======
+const school = document.getElementById("school").value.trim();
+const className = document.getElementById("class").value.trim();
+const studentId = document.getElementById("student-id").value.trim();
+
+const scoreData = {
+  name: studentName,
+  school: school || 'Không rõ',
+  class: className || 'Không rõ',
+  studentId: studentId || '',
+  correct: correct,
+  total: total,
+  percent: percent,
+  timestamp: new Date().toISOString(),
+  date: new Date().toLocaleDateString('vi-VN'),
+  time: new Date().toLocaleTimeString('vi-VN')
+};
+
+// Gửi qua webhook
+fetch(WEBHOOK_URL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(scoreData)
+})
+.then(response => {
+  if (!response.ok) throw new Error('Network error');
+  return response.json();
+})
+.then(data => {
+  resultBox.innerHTML = `
+    <strong>${studentName}</strong> làm đúng <strong>${correct}/${total}</strong> câu (${percent}%).<br>
+    ${message}<br>
+    <span style="color:#16a34a;">✓ Điểm đã được ghi vào hệ thống</span>
+  `;
+})
+.catch(error => {
+  console.error('Error:', error);
+  resultBox.innerHTML = `
+    <strong>${studentName}</strong> làm đúng <strong>${correct}/${total}</strong> câu (${percent}%).<br>
+    ${message}<br>
+    <span style="color:#dc2626;">⚠️ Lỗi gửi điểm. Vui lòng liên hệ giáo viên.</span>
+  `;
+});
+
+      answerKey.style.display = 'block';
+
+      if(window.MathJax && MathJax.typesetPromise){
+        MathJax.typesetPromise([answerKey]).catch(()=>{});
+      }
+    });
+  });
+</script>
+</body>
+</html>
